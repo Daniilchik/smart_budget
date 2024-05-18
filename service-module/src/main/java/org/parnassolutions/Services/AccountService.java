@@ -3,6 +3,7 @@ package org.parnassolutions.Services;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.parnassolutions.DTOs.AccountDTO;
 import org.parnassolutions.DTOs.UserDTO;
 import org.parnassolutions.Entities.Account;
 import org.parnassolutions.Repositories.AccountRepository;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserService userService;
+    private final OperationService operationService;
 
     @NotNull
     @Transactional(readOnly = true)
@@ -49,7 +51,7 @@ public class AccountService {
         return accountRepository.count();
     }
 
-    /*@NotNull
+    @NotNull
     @Transactional
     public Account addAccount(@NotNull AccountDTO dto) {
         return accountRepository.save(
@@ -58,12 +60,12 @@ public class AccountService {
                         .title(dto.getTitle())
                         .balance(dto.getBalance())
                         .currency(dto.getCurrency())
-                        .operations() //todo
+                        .operations(operationService.extractOperations(dto))
                         .build()
         );
-    }*/
+    }
 
-    /*@NotNull
+    @NotNull
     @Transactional
     public Account updateAccount(@NotNull Long accountId, @NotNull AccountDTO dto) {
         Account account = accountRepository.findById(accountId)
@@ -73,10 +75,10 @@ public class AccountService {
         if(dto.getTitle() != null) account.setTitle(dto.getTitle());
         if(dto.getBalance() != null) account.setBalance(dto.getBalance());
         if(dto.getCurrency() != null) account.setCurrency(dto.getCurrency());
-        if(dto.getOperations() != null) account.setOperations() //todo
+        if(dto.getOperations() != null) account.setOperations(operationService.extractOperations(dto));
 
         return accountRepository.save(account);
-    }*/
+    }
 
     @Transactional
     public void deleteAccount(@NotNull Long accountId) {

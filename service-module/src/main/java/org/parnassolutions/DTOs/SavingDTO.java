@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class SavingDTO extends OperationDTO {
-    private Long goal;
+    private Long goalId;
 }

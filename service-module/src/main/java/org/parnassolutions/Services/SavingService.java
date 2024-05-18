@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SavingService {
     private final SavingRepository savingRepository;
+    private final GoalService goalService;
 
     @NotNull
     @Transactional(readOnly = true)
@@ -40,30 +41,30 @@ public class SavingService {
         savingRepository.deleteById(savingId);
     }
 
-//    @NotNull
-//    @Transactional
-//    public Saving updateSavingById(@NotNull Long savingId, @NotNull SavingDTO dto) {
-//        Saving saving = savingRepository.findById(savingId)
-//                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
-//        if(dto.getGoal() != null) saving.setGoal(dto.getGoal());//todo
-//        if(dto.getDescription() != null) saving.setDescription(dto.getDescription());
-//        if(dto.getAmount() != null) saving.setAmount(dto.getAmount());
-//        if(dto.getTitle() != null) saving.setTitle(dto.getTitle());
-//
-//        return savingRepository.save(saving);
-//    }
+    @NotNull
+    @Transactional
+    public Saving updateSavingById(@NotNull Long savingId, @NotNull SavingDTO dto) {
+        Saving saving = savingRepository.findById(savingId)
+                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+        if(dto.getGoalId() != null) saving.setGoal(goalService.findByGoalId(dto.getGoalId()));
+        if(dto.getDescription() != null) saving.setDescription(dto.getDescription());
+        if(dto.getAmount() != null) saving.setAmount(dto.getAmount());
+        if(dto.getTitle() != null) saving.setTitle(dto.getTitle());
 
-//    @NotNull
-//    @Transactional
-//    public Saving addSaving(@NotNull SavingDTO dto) {
-//        return savingRepository.save(
-//                Saving.builder()
-//                        .date(dto.getDate())
-//                        .goal()//todo
-//                        .description(dto.getDescription())
-//                        .amount(dto.getAmount())
-//                        .title(dto.getTitle())
-//                        .build()
-//        );
-//    }
+        return savingRepository.save(saving);
+    }
+
+    @NotNull
+    @Transactional
+    public Saving addSaving(@NotNull SavingDTO dto) {
+        return savingRepository.save(
+                Saving.builder()
+                        .date(dto.getDate())
+                        .goal(goalService.findByGoalId(dto.getGoalId()))
+                        .description(dto.getDescription())
+                        .amount(dto.getAmount())
+                        .title(dto.getTitle())
+                        .build()
+        );
+    }
 }

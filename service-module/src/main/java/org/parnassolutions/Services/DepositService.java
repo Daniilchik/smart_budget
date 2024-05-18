@@ -59,7 +59,6 @@ public class DepositService {
     public Deposit addDeposit(@NotNull DepositDTO dto) {
         return depositRepository.save(
                 Deposit.builder()
-
                         .date(dto.getDate())
                         .description(dto.getDescription())
                         .amount(dto.getAmount())

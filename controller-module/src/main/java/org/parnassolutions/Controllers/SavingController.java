@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -31,16 +30,16 @@ public class SavingController {
     public Long getSavingsCount() {
         return savingService.getSavingsCount();
     }
-//
-//    @PostMapping(value = "/add", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    public Saving addSaving(@RequestBody SavingDTO dto) {
-//        return savingService.addSaving(dto);
-//    }
 
-//    @PostMapping(value = "/update/{savingId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-//    public Saving updateSaving(@PathVariable("savingId") Long savingId, @RequestBody SavingDTO dto) {
-//        return savingService.updateSavingById(savingId, dto);
-//    }
+    @PostMapping(value = "/add", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public Saving addSaving(@RequestBody SavingDTO dto) {
+        return savingService.addSaving(dto);
+    }
+
+    @PostMapping(value = "/update/{savingId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public Saving updateSaving(@PathVariable("savingId") Long savingId, @RequestBody SavingDTO dto) {
+        return savingService.updateSavingById(savingId, dto);
+    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/delete/{savingId}", produces = APPLICATION_JSON_VALUE)
