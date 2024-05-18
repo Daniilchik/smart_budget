@@ -53,6 +53,7 @@ public class DepositService {
         if(dto.getAmount() != null) deposit.setAmount(dto.getAmount());
         if(dto.getTitle() != null) deposit.setTitle(dto.getTitle());
         if(dto.getSource() != null) deposit.setSource(dto.getSource());
+        if(dto.getOperationType() != null) deposit.setOperationType(dto.getOperationType());
 
         return depositRepository.save(deposit);
     }
@@ -63,10 +64,12 @@ public class DepositService {
         return depositRepository.save(
                 Deposit.builder()
                         .account(accountService.findByAccountId(dto.getAccountId()))
+                        .source(dto.getSource())
                         .date(dto.getDate())
                         .description(dto.getDescription())
                         .amount(dto.getAmount())
                         .title(dto.getTitle())
+                        .operationType(dto.getOperationType())
                         .build()
         );
     }

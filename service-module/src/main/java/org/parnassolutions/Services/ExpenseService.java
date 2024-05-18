@@ -53,6 +53,7 @@ public class ExpenseService {
         if(dto.getDescription() != null) expense.setDescription(dto.getDescription());
         if(dto.getAmount() != null) expense.setAmount(dto.getAmount());
         if(dto.getTitle() != null) expense.setTitle(dto.getTitle());
+        if(dto.getOperationType() != null) expense.setOperationType(dto.getOperationType());
 
         return expenseRepository.save(expense);
     }
@@ -68,6 +69,7 @@ public class ExpenseService {
                         .description(dto.getDescription())
                         .amount(dto.getAmount())
                         .title(dto.getTitle())
+                        .operationType(dto.getOperationType())
                         .build()
         );
     }

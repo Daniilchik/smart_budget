@@ -51,8 +51,10 @@ public class SavingService {
         if(dto.getAccountId() != null) saving.setAccount(accountService.findByAccountId(dto.getAccountId()));
         if(dto.getGoalId() != null) saving.setGoal(goalService.findByGoalId(dto.getGoalId()));
         if(dto.getDescription() != null) saving.setDescription(dto.getDescription());
+        if(dto.getDate() != null) saving.setDate(dto.getDate());
         if(dto.getAmount() != null) saving.setAmount(dto.getAmount());
         if(dto.getTitle() != null) saving.setTitle(dto.getTitle());
+        if(dto.getOperationType() != null) saving.setOperationType(dto.getOperationType());
 
         return savingRepository.save(saving);
     }
@@ -68,6 +70,7 @@ public class SavingService {
                         .description(dto.getDescription())
                         .amount(dto.getAmount())
                         .title(dto.getTitle())
+                        .operationType(dto.getOperationType())
                         .build()
         );
     }
