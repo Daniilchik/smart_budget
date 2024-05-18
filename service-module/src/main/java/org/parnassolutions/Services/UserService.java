@@ -16,9 +16,6 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
-    /*private final AccountService accountService;
-    private final GoalService goalService;*/
-
     @NotNull
     @Transactional(readOnly = true)
     public User findByUserId(@NotNull Long userId) {
@@ -45,8 +42,8 @@ public class UserService {
                 User.builder()
                         .username(dto.getUsername())
                         .email(dto.getEmail())
-                        //.accounts(accountService.extractAccounts(dto))
-                        //.goals(goalService.extractGoals(dto))
+                        .password(dto.getPassword())
+                        .role(dto.getRole())
                         .build()
                 );
     }
@@ -57,10 +54,10 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found."));
 
-        if(dto.getUsername() != null) user.setUsername(dto.getUsername());
+        if(dto.getUsername() != null) user.setName(dto.getUsername());
         if(dto.getEmail() != null) user.setEmail(dto.getEmail());
-        //if(dto.getAccounts() != null) user.setAccounts(accountService.extractAccounts(dto));
-        //if(dto.getGoals() != null) user.setGoals(goalService.extractGoals(dto));
+        if(dto.getPassword() != null) user.setPassword(dto.getPassword());
+        if(dto.getRole() != null) user.setRole(dto.getRole());
 
         return userRepository.save(user);
     }
