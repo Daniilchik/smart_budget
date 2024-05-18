@@ -15,12 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepositService {
     private final DepositRepository depositRepository;
+    private final AccountService accountService;
 
     @NotNull
     @Transactional(readOnly = true)
     public Deposit findByDepositId(@NotNull Long depositId) {
         return depositRepository.findById(depositId)
-                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Operation with id " + depositId + " not found."));
     }
 
     @NotNull
@@ -36,15 +37,17 @@ public class DepositService {
     }
 
     @Transactional
-    public void deleteDepositById(@NotNull Long depositId) {
+    public void deleteDeposit(@NotNull Long depositId) {
         depositRepository.deleteById(depositId);
     }
 
     @NotNull
     @Transactional
-    public Deposit updateDepositById(@NotNull Long depositId, @NotNull DepositDTO dto) {
+    public Deposit updateDeposit(@NotNull Long depositId, @NotNull DepositDTO dto) {
         Deposit deposit = depositRepository.findById(depositId)
-                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Operation with id " + depositId + " not found."));
+
+        if(dto.getAccountId() != null) deposit.setAccount(accountService.findByAccountId(dto.getAccountId()));
         if(dto.getDate() != null) deposit.setDate(dto.getDate());
         if(dto.getDescription() != null) deposit.setDescription(dto.getDescription());
         if(dto.getAmount() != null) deposit.setAmount(dto.getAmount());
@@ -59,6 +62,7 @@ public class DepositService {
     public Deposit addDeposit(@NotNull DepositDTO dto) {
         return depositRepository.save(
                 Deposit.builder()
+                        .account(accountService.findByAccountId(dto.getAccountId()))
                         .date(dto.getDate())
                         .description(dto.getDescription())
                         .amount(dto.getAmount())

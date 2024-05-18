@@ -8,6 +8,6 @@ import java.util.List;
 public class UserDTO {
     private String username;
     private String email;
-    private List<Long> accounts;
-    private List<Long> goals;
+    /*private List<Long> accounts;
+    private List<Long> goals;*/
 }

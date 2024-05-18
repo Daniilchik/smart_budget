@@ -27,9 +27,9 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    /*@OneToMany(mappedBy = "user")
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "user")
-    private List<Goal> goals;
+    private List<Goal> goals;*/
 }

@@ -5,23 +5,19 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.parnassolutions.DTOs.UserDTO;
 import org.parnassolutions.Entities.User;
-import org.parnassolutions.Repositories.AccountRepository;
-import org.parnassolutions.Repositories.GoalRepository;
 import org.parnassolutions.Repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
-    private final AccountService accountService;
-    private final GoalService goalService;
+    /*private final AccountService accountService;
+    private final GoalService goalService;*/
 
     @NotNull
     @Transactional(readOnly = true)
@@ -38,7 +34,7 @@ public class UserService {
 
     @NotNull
     @Transactional(readOnly = true)
-    public Long getUserCount() {
+    public Long getUsersCount() {
         return userRepository.count();
     }
 
@@ -49,8 +45,8 @@ public class UserService {
                 User.builder()
                         .username(dto.getUsername())
                         .email(dto.getEmail())
-                        .accounts(accountService.extractAccounts(dto))
-                        .goals(goalService.extractGoals(dto))
+                        //.accounts(accountService.extractAccounts(dto))
+                        //.goals(goalService.extractGoals(dto))
                         .build()
                 );
     }
@@ -63,8 +59,8 @@ public class UserService {
 
         if(dto.getUsername() != null) user.setUsername(dto.getUsername());
         if(dto.getEmail() != null) user.setEmail(dto.getEmail());
-        if(dto.getAccounts() != null) user.setAccounts(accountService.extractAccounts(dto));
-        if(dto.getGoals() != null) user.setGoals(goalService.extractGoals(dto));
+        //if(dto.getAccounts() != null) user.setAccounts(accountService.extractAccounts(dto));
+        //if(dto.getGoals() != null) user.setGoals(goalService.extractGoals(dto));
 
         return userRepository.save(user);
     }

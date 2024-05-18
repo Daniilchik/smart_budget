@@ -16,12 +16,13 @@ import java.util.List;
 public class SavingService {
     private final SavingRepository savingRepository;
     private final GoalService goalService;
+    private final AccountService accountService;
 
     @NotNull
     @Transactional(readOnly = true)
     public Saving findBySavingId(@NotNull Long savingId) {
         return savingRepository.findById(savingId)
-                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Operation with id " + savingId + " not found."));
     }
 
     @NotNull
@@ -45,7 +46,9 @@ public class SavingService {
     @Transactional
     public Saving updateSavingById(@NotNull Long savingId, @NotNull SavingDTO dto) {
         Saving saving = savingRepository.findById(savingId)
-                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Operation with id " + savingId + " not found."));
+
+        if(dto.getAccountId() != null) saving.setAccount(accountService.findByAccountId(dto.getAccountId()));
         if(dto.getGoalId() != null) saving.setGoal(goalService.findByGoalId(dto.getGoalId()));
         if(dto.getDescription() != null) saving.setDescription(dto.getDescription());
         if(dto.getAmount() != null) saving.setAmount(dto.getAmount());
@@ -59,6 +62,7 @@ public class SavingService {
     public Saving addSaving(@NotNull SavingDTO dto) {
         return savingRepository.save(
                 Saving.builder()
+                        .account(accountService.findByAccountId(dto.getAccountId()))
                         .date(dto.getDate())
                         .goal(goalService.findByGoalId(dto.getGoalId()))
                         .description(dto.getDescription())

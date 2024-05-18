@@ -4,15 +4,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.parnassolutions.DTOs.GoalDTO;
-import org.parnassolutions.DTOs.UserDTO;
 import org.parnassolutions.Entities.Goal;
 import org.parnassolutions.Repositories.GoalRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class GoalService {
         return goalRepository.findAll();
     }
 
-    @NotNull
+    /*@NotNull
     @Transactional(readOnly = true)
     public List<Goal> extractGoals(@NotNull UserDTO dto) {
         return dto.getGoals()
@@ -42,11 +39,11 @@ public class GoalService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @NotNull
     @Transactional(readOnly = true)
-    public Long getGoalCount() {
+    public Long getGoalsCount() {
         return goalRepository.count();
     }
 

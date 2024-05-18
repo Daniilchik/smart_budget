@@ -22,7 +22,7 @@ public class OperationService {
     @Transactional(readOnly = true)
     public Operation findByOperationId(@NotNull Long operationId) {
         return operationRepository.findById(operationId)
-                .orElseThrow(() -> new EntityNotFoundException("Operation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Operation with id " + operationId + " not found."));
     }
 
     @NotNull

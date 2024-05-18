@@ -37,14 +37,14 @@ public class ExpenseController {
         return expenseService.addExpense(dto);
     }
 
-    @PostMapping(value = "/update/{expenseId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/update/{expenseId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Expense updateExpense(@PathVariable("expenseId") Long expenseId, @RequestBody ExpenseDTO dto) {
-        return expenseService.updateExpenseById(expenseId, dto);
+        return expenseService.updateExpense(expenseId, dto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/delete/{expenseId}", produces = APPLICATION_JSON_VALUE)
     public void deleteExpense(@PathVariable("expenseId") Long expenseId) {
-        expenseService.deleteExpenseById(expenseId);
+        expenseService.deleteExpense(expenseId);
     }
 }

@@ -37,14 +37,14 @@ public class DepositController {
         return depositService.addDeposit(dto);
     }
 
-    @PostMapping(value = "/update/{depositId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/update/{depositId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Deposit updateDeposit(@PathVariable("depositId") Long depositId, @RequestBody DepositDTO dto) {
-        return depositService.updateDepositById(depositId, dto);
+        return depositService.updateDeposit(depositId, dto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/delete/{depositId}", produces = APPLICATION_JSON_VALUE)
     public void deleteDeposit(@PathVariable("depositId") Long depositId) {
-        depositService.deleteDepositById(depositId);
+        depositService.deleteDeposit(depositId);
     }
 }

@@ -4,20 +4,18 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.parnassolutions.DTOs.AccountDTO;
-import org.parnassolutions.DTOs.UserDTO;
 import org.parnassolutions.Entities.Account;
 import org.parnassolutions.Repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
+
     private final UserService userService;
     private final OperationService operationService;
 
@@ -34,7 +32,7 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    @NotNull
+    /*@NotNull
     @Transactional(readOnly = true)
     public List<Account> extractAccounts(@NotNull UserDTO dto) {
         return dto.getAccounts()
@@ -43,11 +41,11 @@ public class AccountService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @NotNull
     @Transactional(readOnly = true)
-    public Long getAccountCount() {
+    public Long getAccountsCount() {
         return accountRepository.count();
     }
 

@@ -36,7 +36,7 @@ public class SavingController {
         return savingService.addSaving(dto);
     }
 
-    @PostMapping(value = "/update/{savingId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/update/{savingId}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Saving updateSaving(@PathVariable("savingId") Long savingId, @RequestBody SavingDTO dto) {
         return savingService.updateSavingById(savingId, dto);
     }
