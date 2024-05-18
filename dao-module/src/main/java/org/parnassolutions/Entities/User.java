@@ -6,25 +6,30 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "user", schema = "public")
+@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String username;
 
-    @Column(name = "password")
-    private String password;
+    @Column(nullable = false)
+    private String email;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "accounts", nullable = false)
-    private Account account;
+    @OneToMany(mappedBy = "user")
+    private List<Account> accounts;
+
+    @OneToMany(mappedBy = "user")
+    private List<Goal> goals;
 }
