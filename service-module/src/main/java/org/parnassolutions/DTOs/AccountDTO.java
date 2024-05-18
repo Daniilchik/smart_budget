@@ -1,11 +1,15 @@
 package org.parnassolutions.DTOs;
 
 import lombok.Data;
+import org.parnassolutions.Enums.Currency;
+
+import java.util.List;
 
 @Data
 public class AccountDTO {
-    private Integer userId;
-    private Long budget;
-    private Long income;
-    private Long expense;
+    private Long userId;
+    private String title;
+    private Long balance;
+    private Currency currency;
+    private List<Long> operations;
 }
