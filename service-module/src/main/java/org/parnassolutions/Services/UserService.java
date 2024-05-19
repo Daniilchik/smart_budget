@@ -24,6 +24,13 @@ public class UserService {
     }
 
     @NotNull
+    @Transactional
+    public User findByEmail(@NotNull String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found."));
+    }
+
+    @NotNull
     @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return userRepository.findAll();
