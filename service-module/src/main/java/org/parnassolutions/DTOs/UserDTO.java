@@ -5,7 +5,7 @@ import org.parnassolutions.Enums.Role;
 
 @Data
 public class UserDTO {
-    private String username;
+    private String name;
     private String email;
     private String password;
     private Role role;

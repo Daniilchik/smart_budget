@@ -1,5 +1,6 @@
 package org.parnassolutions.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.parnassolutions.Enums.Role;
@@ -23,8 +24,8 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Long userId;
 
-    @Getter(AccessLevel.NONE)
-    private String username;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -34,19 +35,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public String getName() {
-        return username;
-    }
-
-    public void setName(String username) {
-        this.username = username;
-    }
-
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @JsonIgnore
+    @Override
     public String getUsername() {
         return email;
     }
@@ -56,21 +52,25 @@ public class User implements UserDetails {
         return password;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

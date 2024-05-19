@@ -40,7 +40,7 @@ public class UserService {
     public User addUser(@NotNull UserDTO dto) {
         return userRepository.save(
                 User.builder()
-                        .username(dto.getUsername())
+                        .name(dto.getName())
                         .email(dto.getEmail())
                         .password(dto.getPassword())
                         .role(dto.getRole())
@@ -54,7 +54,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found."));
 
-        if(dto.getUsername() != null) user.setName(dto.getUsername());
+        if(dto.getName() != null) user.setName(dto.getName());
         if(dto.getEmail() != null) user.setEmail(dto.getEmail());
         if(dto.getPassword() != null) user.setPassword(dto.getPassword());
         if(dto.getRole() != null) user.setRole(dto.getRole());
