@@ -30,7 +30,7 @@ public class Account {
     private String title;
 
     @Column(nullable = false)
-    private Long balance;
+    private Double balance;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -9,7 +9,7 @@ import java.util.List;
 public class AccountDTO {
     private Long userId;
     private String title;
-    private Long balance;
+    private Double balance;
     private Currency currency;
     private List<Long> operations;
 }
