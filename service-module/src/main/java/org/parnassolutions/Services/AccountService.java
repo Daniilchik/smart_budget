@@ -32,17 +32,6 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    /*@NotNull
-    @Transactional(readOnly = true)
-    public List<Account> extractAccounts(@NotNull UserDTO dto) {
-        return dto.getAccounts()
-                .stream()
-                .map(accountRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-    }*/
-
     @NotNull
     @Transactional(readOnly = true)
     public Long getAccountsCount() {
@@ -81,5 +70,14 @@ public class AccountService {
     @Transactional
     public void deleteAccount(@NotNull Long accountId) {
         accountRepository.deleteById(accountId);
+    }
+
+    @Transactional
+    public boolean isOwner(@NotNull Long accountId, @NotNull String email) {
+        Long userId = userService.findByEmail(email).getUserId();
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new EntityNotFoundException("Account with id " + accountId + " not found"));
+
+        return account.getUser().getUserId().equals(userId);
     }
 }
